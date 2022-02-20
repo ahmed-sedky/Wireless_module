@@ -11,15 +11,11 @@ class setup_server{
         }
 }
 
-class server_routes extends setup_server{
+class server_controller extends setup_server{
     constructor (){
         super();
     };
-    // middlewares
-    middlewares (){ // I Think We Don't Need It
-        app.use(express.json());
-    }
-    // routes
+    
     Get(){
         app.get("/", async (req, res) => {
         fs.readFile(DB_PATH, "utf-8", (err, jsonString) => {
