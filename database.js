@@ -14,21 +14,8 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
       `CREATE TABLE temperature (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             reading text, 
-            time text, 
-            )`,
-      `CREATE TABLE pressure (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            reading text, 
-            time text, 
-            )`,
-      (err) => {
-        if (err) {
-          // Table already created
-        } else {
-          // Table just created, creating some rows
-            continue;
-        }
-      }
+            time text
+            )`
     );
   }
 });
