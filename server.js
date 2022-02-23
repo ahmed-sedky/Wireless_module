@@ -25,7 +25,6 @@ app.get("/", (req, res, next) => {
   // });
   
   app.post("/temperature/", (req, res, next) => {
-  console.log("hi 2");
   var errors = [];
   if (!req.body.reading) {
     errors.push("No reading sent");
