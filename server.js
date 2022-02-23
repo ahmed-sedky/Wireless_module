@@ -31,7 +31,7 @@ app.get("/", (req, res, next) => {
     errors.push("No reading sent");
   }
   var data = {
-    reading: "12",
+    reading: req.body.reading,
     time: new Date(),
   };
   var sql = "INSERT INTO temperature (reading, time) VALUES (?,?)";
@@ -55,7 +55,7 @@ app.post("/pressure/", (req, res, next) => {
     errors.push("No reading sent");
   }
   var data = {
-    reading: "12",
+    reading: req.body.reading,
     time: new Date(),
   };
   var sql = "INSERT INTO pressure (reading, time) VALUES (?,?)";
@@ -83,13 +83,14 @@ app.get("/temperature/", (req, res, next) => {
     }
     console.log(rows);
     res.status(200).json({
-     message:"success",
-     data:rows 
+      message:"success",
+      data:rows 
     });
   });
 });
 
 app.get("/pressure/", (req, res, next) => {
+  console.log(50);
   var sql = "select * from pressure";
   var params = [];
   db.all(sql, params, (err, rows) => {
