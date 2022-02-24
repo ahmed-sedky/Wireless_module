@@ -11,7 +11,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
   } else {
     console.log("Connected to the SQLite database.");
     db.run(
-      `CREATE TABLE temperature (id INTEGER PRIMARY KEY AUTOINCREMENT,reading INTEGER,time text )`,
+      `CREATE TABLE temperature (id INTEGER PRIMARY KEY AUTOINCREMENT,reading INTEGER,time INTEGER )`,
     (err)=>{
       if (err){
         
@@ -22,7 +22,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
     }
     );
     db.run(
-      `CREATE TABLE pressure (id INTEGER PRIMARY KEY AUTOINCREMENT,reading INTEGER,time text )`,
+      `CREATE TABLE pressure (id INTEGER PRIMARY KEY AUTOINCREMENT,reading INTEGER,time INTEGER )`,
     (err)=>{
       if (err){
       }

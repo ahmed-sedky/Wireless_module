@@ -7,6 +7,7 @@ app.use(cors())
 app.use(express.json());
 // Server port
 var HTTP_PORT = 8433;
+var toggle = 1;
 // Start server
 
 app.listen(HTTP_PORT, () => {
@@ -23,15 +24,33 @@ app.get("/", (req, res, next) => {
 // app.use(function (req, res) {
   //   res.status(404);
   // });
-  
-  app.post("/temperature/", (req, res, next) => {
-  var errors = [];
+  app.post("/toggleLed",(req, res)=>{
+    toggle = !toggle;
+    console.log(toggle);
+    res.json({
+      message: "success",
+    });
+  });
+
+  app.get("/toggleLed",(req, res)=>{
+    res.json({
+      message: "success",
+      data : toggle
+    });
+  });
+
+  app.post("/temperature/", (req, res) => {
   if (!req.body.reading) {
-    errors.push("No reading sent");
+    res.status(400).json({ error: "No Reading Sent" });
+      return;
+  }
+  if(isNaN(req.body.reading)){
+    res.status(400).json({ error: "Invalid Data Type" });
+      return;
   }
   var data = {
     reading: req.body.reading,
-    time: new Date(),
+    time: new Date().getTime(),
   };
   var sql = "INSERT INTO temperature (reading, time) VALUES (?,?)";
   var params = [data.reading, data.time];
@@ -49,13 +68,17 @@ app.get("/", (req, res, next) => {
 });
 
 app.post("/pressure/", (req, res, next) => {
-  var errors = [];
   if (!req.body.reading) {
-    errors.push("No reading sent");
+    res.status(400).json({ error: "No Reading Sent" });
+      return;
+  }
+  if(isNaN(req.body.reading)){
+    res.status(400).json({ error: "Invalid Data Type" });
+      return;
   }
   var data = {
     reading: req.body.reading,
-    time: new Date(),
+    time: new Date().getTime(),
   };
   var sql = "INSERT INTO pressure (reading, time) VALUES (?,?)";
   var params = [data.reading, data.time];
@@ -89,7 +112,6 @@ app.get("/temperature/", (req, res, next) => {
 });
 
 app.get("/pressure/", (req, res, next) => {
-  console.log(50);
   var sql = "select * from pressure";
   var params = [];
   db.all(sql, params, (err, rows) => {
