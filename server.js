@@ -26,7 +26,6 @@ app.get("/", (req, res, next) => {
   // });
   app.post("/toggleLed",(req, res)=>{
     toggle = !toggle;
-    console.log(toggle);
     res.json({
       message: "success",
     });
@@ -103,7 +102,6 @@ app.get("/temperature/", (req, res, next) => {
       res.status(400).json({ error: err.mesasge });
       return;
     }
-    console.log(rows);
     res.status(200).json({
       message:"success",
       data:rows 
